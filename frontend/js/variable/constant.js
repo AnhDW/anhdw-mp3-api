@@ -1,6 +1,6 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
-export const domain = 'http://localhost:3000' || 'https://anhdw-mp3-api.herokuapp.com'
+export const domain = 'https://anhdw-mp3-api.herokuapp.com' || 'http://localhost:3000'
 export const aElements = $$('.nav__item__link')
 export const iElements = $$('.fa-solid')
 export const content = $('#section__right__bottom')
