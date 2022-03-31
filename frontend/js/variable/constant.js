@@ -26,7 +26,3 @@ export const chartContent = $('.chart__content')
 export const radioContent = $('.radio__content')
 export const followContent = $('.follow__content')
 export const searchContent = $('.search__content')
-
-
-export const dataChart = fetch(domain + '/api/chart').then(res => res.json())
-export const dataHome = fetch(domain + '/api/home/1').then(res => res.json())

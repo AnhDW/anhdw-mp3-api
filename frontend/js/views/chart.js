@@ -17,12 +17,12 @@ import {
     progress,
     container,
     chartContent,
-    dataChart,
+    domain,
 } from '../variable/constant.js';
 
 const chart = {
     render: async function() {
-        var data = await dataChart
+        var data = await fetch(domain + '/api/chart').then(res => res.json())
         var top100 = data.data.RTChart.items
         var weeklyChart = data.data.weekChart
         console.log(top100)
