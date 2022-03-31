@@ -3,7 +3,7 @@ import { searchContent, keyword, domain } from '../variable/constant.js';
 
 const search = {
     render: async function() {
-        var data = await fetch(domain + 'api/search/' + keyword.value).then(res => res.json())
+        var data = await fetch(domain + '/api/search/' + keyword.value).then(res => res.json())
         searchContent.innerHTML = ''
 
         for (let i in data.data) {
