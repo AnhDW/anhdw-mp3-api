@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;500&display=swap');
+:root {
+    --primary-color: #ea7ea2;
+    --right-color: #fbd3d2;
+    --left-color: #f9dbdb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container .icon-pause {
+    display: none;
+}
+
+.container.playing .icon-pause {
+    display: inline-block;
+}
+
+.container.playing .icon-play {
+    display: none;
+}
+
+#section {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    flex-direction: row;
+}
+
+#section__left {
+    min-width: 180px;
+    width: 16%;
+    height: 100%;
+    background-color: var(--left-color);
+}
+
+#section__left .logo {
+    display: flex;
+    width: 100%;
+    height: 11%;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+
+#section__left .logo img {
+    height: 100%;
+}
+
+#section__left .nav {
+    font-size: 14px;
+}
+
+#section__left .nav .nav__item a {
+    color: #000;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    font-weight: 500;
+    width: 100%;
+    align-items: center;
+    padding-left: 25px;
+    border-left: 3px solid transparent;
+}
+
+#section__left .nav .nav__item a.active {
+    border-left: 3px solid var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+    transition: 0.5s;
+}
+
+#section__left .nav .nav__item a:hover {
+    color: var(--primary-color);
+}
+
+.nav .nav__item a i {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+#section__right {
+    width: 84%;
+    height: 100%;
+    overflow-x: hidden;
+    position: relative;
+    background-color: var(--right-color)
+}
+
+#section__right::-webkit-scrollbar {
+    width: 4px;
+}
+
+#section__right::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#section__right__top {
+    width: 100%;
+    height: 11%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+}
+
+#section__right__top #directional {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#section__right__top #directional .directional__item {
+    width: 40px;
+    height: 40px;
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#section__right__top #search {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+#section__right__top #search input[type="text"] {
+    background-color: rgba(0, 0, 0, 0.05);
+    outline: none;
+    font-size: 16px;
+    color: #000;
+    width: 80%;
+    height: 50%;
+    border: none;
+    border-radius: 20px;
+    position: relative;
+    padding: 0 28px;
+}
+
+#section__right__top #search a {
+    position: absolute;
+    margin: 0 8px;
+    cursor: pointer;
+    color: #000;
+}
+
+#section__right__top #setting {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#section__right__top #setting .setting__item {
+    width: 40px;
+    height: 40px;
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#section__right__top #setting {
+    width: 42%;
+}
+
+
+/* content */
+
+#section__right__bottom {
+    width: 100%;
+    margin-top: 78.49px;
+}
+
+#section__right__bottom .content__item {
+    display: none;
+}
+
+#section__right__bottom .content__item.active {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* dashboard */
+
+#dashboard {
+    width: 100%;
+    height: 12%;
+    background-color: #f9c6c5;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard .song {
+    width: 25%;
+    min-width: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard .song .song__img {
+    width: 65px;
+    height: 65px;
+    border-radius: 4px;
+    background-size: cover;
+}
+
+#dashboard .song .song__body {
+    margin: 0 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#dashboard .line {
+    min-width: 0.5px;
+    height: 60%;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#dashboard .control {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard .control .control__btn {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard .control .control__btn .btn {
+    text-align: center;
+    margin: 0 15px;
+    cursor: pointer;
+    min-width: 35px;
+    min-height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard .control .control__btn .btn-toggle-play {
+    border: 2px solid #000;
+    border-radius: 50%;
+}
+
+#dashboard .control .control__btn .btn-toggle-play:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+#dashboard .control .time {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#dashboard .control .time span {
+    width: 10%;
+    text-align: center;
+}
+
+#dashboard .control .time .progress {
+    text-align: center;
+    width: 80%;
+    height: 2px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    opacity: 0.7;
+    -webkit-appearance: none;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+#dashboard .control .time .progress:hover {
+    height: 6px;
+}
+
+.progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 8px;
+    height: 4px;
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+
+#dashboard .like {
+    width: 25%;
+    min-width: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
