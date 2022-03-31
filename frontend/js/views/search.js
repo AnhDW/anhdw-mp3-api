@@ -1,9 +1,9 @@
-import { searchContent, keyword } from '../variable/constant.js';
+import { searchContent, keyword, domain } from '../variable/constant.js';
 
 
 const search = {
     render: async function() {
-        var data = await fetch('http://localhost:3000/api/search/' + keyword.value).then(res => res.json())
+        var data = await fetch(domain + 'api/search/' + keyword.value).then(res => res.json())
         searchContent.innerHTML = ''
 
         for (let i in data.data) {
@@ -19,13 +19,14 @@ const search = {
         var playlistSearch = document.querySelector('.playlists')
 
 
-
-        topSearch.innerHTML += `
-        <h3>Top Kết Quả "${keyword.value}"</h3>
-        <div class='top__item'>
-            <img src='${data.data.top.thumbnail}'>
-            <h4>${data.data.top.name||data.data.top.artists.map(artist=>artist.name)}</h4>
-        </div>`
+        if (topSearch != null) {
+            topSearch.innerHTML += `
+            <h3>Top Kết Quả "${keyword.value}"</h3>
+            <div class='top__item'>
+                <img src='${data.data.top.thumbnail}'>
+                <h4>${data.data.top.name||data.data.top.artists.map(artist=>artist.name)}</h4>
+            </div>`
+        }
 
         if (artistSearch != null) {
             artistSearch.innerHTML += '<h3>Nghệ Sĩ</h3>'
@@ -37,6 +38,7 @@ const search = {
                 </div>`
             })
         }
+
         if (songSearch != null) {
             data.data.songs.map((song) => {
                 songSearch.innerHTML += `
@@ -54,6 +56,7 @@ const search = {
                 </div>`
             })
         }
+
         if (videoSearch != null) {
             data.data.videos.map((video) => {
                 videoSearch.innerHTML += `
@@ -64,6 +67,7 @@ const search = {
                 </div>`
             })
         }
+
         if (playlistSearch != null) {
             data.data.playlists.map((playlist) => {
                 playlistSearch.innerHTML += `

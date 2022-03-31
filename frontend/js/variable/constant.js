@@ -1,5 +1,6 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
+export const domain = 'http://localhost:3000/' || process.env.PORT
 export const aElements = $$('.nav__item__link')
 export const iElements = $$('.fa-solid')
 export const content = $('#section__right__bottom')
@@ -27,4 +28,5 @@ export const followContent = $('.follow__content')
 export const searchContent = $('.search__content')
 
 
-export const dataChart = fetch('http://localhost:3000/api/chart').then(res => res.json())
+export const dataChart = fetch(domain + 'api/chart').then(res => res.json())
+export const dataHome = fetch(domain + 'api/home/1').then(res => res.json())

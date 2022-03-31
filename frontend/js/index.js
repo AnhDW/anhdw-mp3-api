@@ -50,7 +50,7 @@ const pathName = () => {
         document.querySelector('#content_404').classList.add('active')
     }
     aElements.forEach((a, index) => {
-        if (a.href === ('http://localhost:3000' + path)) {
+        if (a.href === (('http://localhost:3000' || process.env.PORT) + path)) {
             a.classList.add('active')
             contentItem[index].classList.add('active')
             document.querySelector('#content_404').classList.remove('active')
@@ -66,7 +66,7 @@ const pathName = () => {
 
 const pathSearch = () => {
     var path = window.location.pathname
-    var param = getUrlParameter('q', 'http://localhost:3000' + location.pathname + location.search)
+    var param = getUrlParameter('q', ('http://localhost:3000' || process.env.PORT) + location.pathname + location.search)
     if (path === '/search') {
         keyword.value = param
         Search.start()

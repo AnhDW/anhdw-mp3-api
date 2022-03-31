@@ -1,10 +1,9 @@
-import { homeContent } from '../variable/constant.js';
+import { homeContent, dataHome } from '../variable/constant.js';
 
 
 const home = {
-    data: fetch('http://localhost:3000/api/home/1').then(res => res.json()),
     render: async function() {
-        var data = await this.data
+        var data = await dataHome
         console.log(data.data.items)
         homeContent.innerHTML = `
         <div class="banner"></div>
