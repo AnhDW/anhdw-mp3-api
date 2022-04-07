@@ -23,56 +23,67 @@ const search = {
             topSearch.innerHTML += `
             <h3>Top Kết Quả "${keyword.value}"</h3>
             <div class='top__item'>
-                <img src='${data.data.top.thumbnail}'>
+                <img src='${data.data.top.thumbnailM}'>
                 <h4>${data.data.top.name||data.data.top.artists.map(artist=>artist.name)}</h4>
             </div>`
         }
 
         if (artistSearch != null) {
-            artistSearch.innerHTML += '<h3>Nghệ Sĩ</h3>'
+            artistSearch.innerHTML += `<h3>Nghệ Sĩ/OA</h3>
+            <div class='artist'></div>
+            `
             data.data.artists.map((artist) => {
-                artistSearch.innerHTML += `
-                <div class='top__item'>
-                <img src='${artist.thumbnail}'>
-                <h4>${artist.name}</h4>
+                document.querySelector('.artists .artist').innerHTML += `
+                <div class='artist__item'>
+                    <img src='${artist.thumbnailM}'>
+                    <h4>${artist.name}</h4>
                 </div>`
             })
         }
-
         if (songSearch != null) {
-            data.data.songs.map((song) => {
+            songSearch.innerHTML += '<h3>Bài Hát</h3>'
+            data.data.songs.map((song, index) => {
                 songSearch.innerHTML += `
-                <div class="song">
-                    <div class="song__img">
-                        <img src="${song.thumbnail}"></img>
-                    </div>
-                    <div class="song__info">
+                <div class='song'>
+                    <div class="song__index">${index+1}</div>
+                    <div class='song__image' style='background-image: url(${song.thumbnailM})'></div>
+                    <div class='song__info'>
                         <h4>${song.title}</h4>
-                        <p>${song.artists.map(artist => artist.name)}</p>
+                        <p>${song.artistsNames}</p>
                     </div>
-                    <div class="song__option">
-                        <i class="fas fa-ellipsis-h"></i>
+                    <div class='song__control'>
+                    <i class="fas fa-ellipsis-h"></i>
                     </div>
-                </div>`
+                </div>
+                `
+
+
             })
         }
-
         if (videoSearch != null) {
+            videoSearch.innerHTML += `<h3>MV</h3><div class='video'></div>`
             data.data.videos.map((video) => {
-                videoSearch.innerHTML += `
-                <div class='video'>
-                    <img src='${video.thumbnail}'>
-                    <h4>${video.title}</h4>
-                    <p>${video.artists.map((artist) => artist.name)}</p>
+                document.querySelector('.videos .video').innerHTML += `
+                <div class="video__item">
+                    <img src="${video.thumbnailM}" alt="">
+                    <div class="info">
+                        <img src="${video.artist.thumbnail}" alt="">
+                        <div class="info__title">
+                            <h4>${video.title}</h4>
+                            <p>${video.artists.map((artist) => artist.name)}</p>
+                        </div>
+                    </div>
                 </div>`
             })
         }
-
         if (playlistSearch != null) {
+
+            playlistSearch.innerHTML += `<h3>Playlist/Album</h3>
+            <div class='playlist'></div>`
             data.data.playlists.map((playlist) => {
-                playlistSearch.innerHTML += `
-                    <div class='video'>
-                        <img src='${playlist.thumbnail}'>
+                document.querySelector('.playlists .playlist').innerHTML += `
+                    <div class='playlist__item'>
+                        <img src='${playlist.thumbnailM}'>
                         <h4>${playlist.title}</h4>
                         <p>${playlist.artists.map((artist) => artist.name)}</p>
                     </div>`
