@@ -34,40 +34,36 @@ const chart = {
 
 
         if (top100 !== undefined) {
-            top100.map(song => {
+            top100.map((song, index) => {
                 chartTop100.innerHTML += `
-                <div class="song">
-                    <div class="song__img">
-                        <img src="${song.thumbnail}"></img>
-                    </div>
-                    <div class="song__info">
+                <div class='song'>
+                    <div class="song__index">${index+1}</div>
+                    <div class='song__image' style='background-image: url(${song.thumbnail})'></div>
+                    <div class='song__info'>
                         <h4>${song.title}</h4>
-                        <p>${song.artistsNames}</p>
+                        <p>${song.artists.map(artist => artist.name)}</p>
                     </div>
-                    <div class="song__option">
-                        <i class="fas fa-ellipsis-h"></i>
+                    <div class='song__control'>
+                    <i class="fas fa-ellipsis-h"></i>
                     </div>
-                </div>
-            `
+                </div>`
             })
         }
 
         if (weeklyChart !== undefined) {
-            weeklyChart.vn.items.map(song => {
+            weeklyChart.vn.items.map((song, index) => {
                 chartContent.innerHTML += `
-                <div class="song">
-                    <div class="song__img">
-                        <img src="${song.thumbnail}"></img>
-                    </div>
-                    <div class="song__info">
+                <div class='song'>
+                    <div class="song__index">${index+1}</div>
+                    <div class='song__image' style='background-image: url(${song.thumbnail})'></div>
+                    <div class='song__info'>
                         <h4>${song.title}</h4>
                         <p>${song.artists.map(artist => artist.name)}</p>
                     </div>
-                    <div class="song__option">
-                        <i class="fas fa-ellipsis-h"></i>
+                    <div class='song__control'>
+                    <i class="fas fa-ellipsis-h"></i>
                     </div>
-                </div>
-            `
+                </div>`
             })
         }
     },

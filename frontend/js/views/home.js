@@ -7,28 +7,34 @@ const home = {
         console.log(data.data.items)
         homeContent.innerHTML = `
         <div class="banner"></div>
-        <div class="${data.data.items[3].sectionId}"><h3>${data.data.items[3].title}</h3></div>
-        <div class="${data.data.items[4].sectionId}"><h3>${data.data.items[4].title}</h3></div>`
+        <div class="${data.data.items[3].sectionId}">
+            <h2>${data.data.items[3].title}</h2>
+            <div class='playlist'></div>
+        </div>
+        <div class="${data.data.items[4].sectionId}">
+            <h2>${data.data.items[4].title}</h2>
+            <div class='playlist'></div>
+        </div>`
 
         data.data.items[0].items.map(item => {
             document.querySelector('.banner').innerHTML += `
             <div 
-                style="background-image: url(${item.banner});background-size: cover;width: 300px; height:200px"
+                style="background-image: url(${item.banner});"
                 onclick="window.location.href='${item.link}'"
-            >
+                class="banner__item">
             </div>`
         })
         data.data.items[3].items.map(item => {
-            document.querySelector('.hAutoTheme1').innerHTML += `
-            <div class="playlist">
+            document.querySelector('.hAutoTheme1 .playlist').innerHTML += `
+            <div class="playlist__item">
                 <img src="${item.thumbnailM}">
                 <h4>${item.title}</h4>
                 <p>${item.sortDescription}</p>
             </div>`
         })
         data.data.items[4].items.map(item => {
-            document.querySelector('.hXone').innerHTML += `
-            <div class="playlist">
+            document.querySelector('.hXone .playlist').innerHTML += `
+            <div class="playlist__item">
                 <img src="${item.thumbnailM}">
                 <h4>${item.title}</h4>
                 <p>${item.sortDescription}</p>
