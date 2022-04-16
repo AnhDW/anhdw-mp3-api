@@ -1,4 +1,4 @@
-import { radioContent } from '../variable/constant.js';
+import { radioContent, domain } from '../variable/constant.js';
 const radio = {
     render: function() {
 
