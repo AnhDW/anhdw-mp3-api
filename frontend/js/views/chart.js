@@ -1,22 +1,5 @@
 import {
     domain,
-    aElements,
-    iElements,
-    content,
-    keyword,
-    songImg,
-    songTitle,
-    songAuthor,
-    audio,
-    playBtn,
-    pauseBtn,
-    togglePlay,
-    prevBtn,
-    nextBtn,
-    randomBtn,
-    repeatBtn,
-    progress,
-    container,
     chartContent,
 } from '../variable/constant.js';
 

@@ -4,7 +4,7 @@ import {
     songImg,
     songTitle,
     songAuthor,
-    audio,
+    music,
     playBtn,
     pauseBtn,
     togglePlay,
@@ -56,16 +56,16 @@ const control = {
         return min + ':' + sec
     },
     playSong: function() {
-        audio.play()
+        music.play()
         container.classList.add('playing')
     },
     pauseSong: function() {
-        audio.pause()
+        music.pause()
         container.classList.remove('playing')
     },
     handle: function() {
         togglePlay.onclick = () => {
-            if (audio.paused) {
+            if (music.paused) {
                 this.playSong()
             } else {
                 this.pauseSong()
@@ -100,22 +100,22 @@ const control = {
                 repeatBtn.classList.add('active')
             }
         }
-        audio.ontimeupdate = () => {
-            if (audio.duration) {
-                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100) //thời gian hiện tại chia cho thời lượng bài hát ra phần trăm
+        music.ontimeupdate = () => {
+            if (music.duration) {
+                const progressPercent = Math.floor(music.currentTime / music.duration * 100) //thời gian hiện tại chia cho thời lượng bài hát ra phần trăm
                 progress.value = progressPercent
-                document.querySelector('.current-time').innerText = this.time(audio.currentTime)
-                document.querySelector('.duration-time').innerText = this.time(audio.duration)
+                document.querySelector('.current-time').innerText = this.time(music.currentTime)
+                document.querySelector('.duration-time').innerText = this.time(music.duration)
             }
         }
         progress.onchange = function(e) {
-            audio.currentTime = e.target.value / 100 * audio.duration
+            music.currentTime = e.target.value / 100 * music.duration
         }
-        audio.onended = function() {
+        music.onended = function() {
             if (repeatBtn.classList.contains('active') == false) {
                 nextBtn.click()
             } else {
-                audio.play()
+                music.play()
             }
         }
         sectionRight.onscroll = function() {
@@ -139,11 +139,11 @@ const control = {
     render: function() {},
     init: async function() {
         var infoSong = await fetch(domain + '/api/infosong/' + this.data[this.currentIndex]).then(res => res.json())
-        var audioSong = await fetch(domain + '/api/song/' + this.data[this.currentIndex]).then(res => res.json())
+        var musicSong = await fetch(domain + '/api/song/' + this.data[this.currentIndex]).then(res => res.json())
         songImg.style.backgroundImage = `url(${infoSong.data.thumbnail})`
         songTitle.innerText = infoSong.data.title
         songAuthor.innerText = infoSong.data.artistsNames
-        audio.src = audioSong.data['128']
+        music.src = musicSong.data['128']
         this.playSong()
 
         var song = document.querySelectorAll('.song')

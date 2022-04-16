@@ -1,22 +1,6 @@
 import {
     domain,
-    aElements,
-    iElements,
-    content,
     keyword,
-    songImg,
-    songTitle,
-    songAuthor,
-    audio,
-    playBtn,
-    pauseBtn,
-    togglePlay,
-    prevBtn,
-    nextBtn,
-    randomBtn,
-    repeatBtn,
-    progress,
-    container,
     searchContent,
 } from '../variable/constant.js';
 import { route, pathName } from '../index.js';
