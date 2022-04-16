@@ -143,7 +143,7 @@ const control = {
         songImg.style.backgroundImage = `url(${infoSong.data.thumbnail})`
         songTitle.innerText = infoSong.data.title
         songAuthor.innerText = infoSong.data.artistsNames
-        audio.src = audioSong.data[128]
+        audio.src = audioSong.data['128']
         this.playSong()
 
         var song = document.querySelectorAll('.song')
