@@ -1,9 +1,10 @@
-import { homeContent, domain } from '../variable/constant.js';
-
+import { homeContent, playlistElements, container, domain } from '../variable/constant.js';
+import { route, pathName } from '../index.js';
 
 const home = {
+    data: fetch(domain + '/api/home/1').then(res => res.json()),
     render: async function() {
-        var data = await fetch(domain + '/api/home/1').then(res => res.json())
+        var data = await this.data
         console.log(data.data.items)
         homeContent.innerHTML = `
         <div class="banner"></div>
@@ -20,25 +21,43 @@ const home = {
             document.querySelector('.banner').innerHTML += `
             <div 
                 style="background-image: url(${item.banner});"
-                onclick="window.location.href='${item.link}'"
+                data-id='${item.encodeId}'
                 class="banner__item">
             </div>`
         })
+
         data.data.items[3].items.map(item => {
-            document.querySelector('.hAutoTheme1 .playlist').innerHTML += `
-            <div class="playlist__item">
-                <img src="${item.thumbnailM}">
+            document.querySelector('.hSuggestPl .playlist').innerHTML += `
+            <div class='playlist__item' data-id='${item.encodeId}'>
+                <img src='${item.thumbnailM}'>
                 <h4>${item.title}</h4>
                 <p>${item.sortDescription}</p>
             </div>`
         })
         data.data.items[4].items.map(item => {
-            document.querySelector('.hXone .playlist').innerHTML += `
-            <div class="playlist__item">
-                <img src="${item.thumbnailM}">
+            document.querySelector('.hAutoTheme1 .playlist').innerHTML += `
+            <div 
+                class='playlist__item'data-id='${item.encodeId}'   
+            >
+                <img src='${item.thumbnailM}'>
                 <h4>${item.title}</h4>
                 <p>${item.sortDescription}</p>
             </div>`
+        })
+        document.querySelectorAll('.playlist__item').forEach(playlistElement => {
+            playlistElement.onclick = () => {
+                console.log(playlistElement.dataset.id)
+                window.history.pushState({}, '', '/playlist?p=' + playlistElement.dataset.id)
+                pathName()
+            }
+        })
+
+        document.querySelectorAll('.banner .banner__item').forEach(playlistElement => {
+            playlistElement.onclick = () => {
+                console.log(playlistElement.dataset.id)
+                window.history.pushState({}, '', '/playlist?p=' + playlistElement.dataset.id)
+                pathName()
+            }
         })
 
     },

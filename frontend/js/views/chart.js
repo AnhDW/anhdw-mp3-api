@@ -1,4 +1,5 @@
 import {
+    domain,
     aElements,
     iElements,
     content,
@@ -17,26 +18,29 @@ import {
     progress,
     container,
     chartContent,
-    domain,
 } from '../variable/constant.js';
 
 const chart = {
+    data: fetch(domain + '/api/chart').then(res => res.json()),
     render: async function() {
-        var data = await fetch(domain + '/api/chart').then(res => res.json())
+        var data = await this.data
         var top100 = data.data.RTChart.items
         var weeklyChart = data.data.weekChart
-        console.log(top100)
-        chartContent.innerHTML = `<div class="chart__top100"></div>
+        console.log(weeklyChart)
+        chartContent.innerHTML = `
+        <div class="chart__top100 listSong" data-songs='${top100.map(item => item.encodeId).join(' ')}'></div>
         <div class="chart__weekly">
-            <h2>BXH Hàng Tuần</h2>
+            <div class="chart__vn listSong" data-songs='${weeklyChart.vn.items.map(item => item.encodeId).join(' ')}'>
+                <h2>BXH Hàng Tuần</h2>
+            </div>
         </div>`
         var chartTop100 = document.querySelector('.chart__top100')
-
+        var chartVN = document.querySelector('.chart__vn')
 
         if (top100 !== undefined) {
             top100.map((song, index) => {
                 chartTop100.innerHTML += `
-                <div class='song'>
+                <div class='song' data-id='${song.encodeId}'>
                     <div class="song__index">${index+1}</div>
                     <div class='song__image' style='background-image: url(${song.thumbnail})'></div>
                     <div class='song__info'>
@@ -52,8 +56,8 @@ const chart = {
 
         if (weeklyChart !== undefined) {
             weeklyChart.vn.items.map((song, index) => {
-                chartContent.innerHTML += `
-                <div class='song'>
+                chartVN.innerHTML += `
+                <div class='song' data-id='${song.encodeId}'>
                     <div class="song__index">${index+1}</div>
                     <div class='song__image' style='background-image: url(${song.thumbnail})'></div>
                     <div class='song__info'>
@@ -61,7 +65,7 @@ const chart = {
                         <p>${song.artists.map(artist => artist.name)}</p>
                     </div>
                     <div class='song__control'>
-                    <i class="fas fa-ellipsis-h"></i>
+                        <i class="fas fa-ellipsis-h"></i>
                     </div>
                 </div>`
             })

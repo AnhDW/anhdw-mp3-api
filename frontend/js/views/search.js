@@ -1,23 +1,43 @@
-import { searchContent, keyword, domain } from '../variable/constant.js';
-
+import {
+    domain,
+    aElements,
+    iElements,
+    content,
+    keyword,
+    songImg,
+    songTitle,
+    songAuthor,
+    audio,
+    playBtn,
+    pauseBtn,
+    togglePlay,
+    prevBtn,
+    nextBtn,
+    randomBtn,
+    repeatBtn,
+    progress,
+    container,
+    searchContent,
+} from '../variable/constant.js';
+import { route, pathName } from '../index.js';
 
 const search = {
-    render: async function() {
-        var data = await fetch(domain + '/api/search/' + keyword.value).then(res => res.json())
+    currentIndex: 0,
+    render: async function(data) {
+        console.log(data)
+
         searchContent.innerHTML = ''
-
         for (let i in data.data) {
-            var html = `<div class='${i}'></div>`
+            var html = `<div class='${i}' data-${i}='${ i==='songs' ? data.data.songs.map(item => item.encodeId).join(' '):''}'></div>`
             searchContent.innerHTML += html
-            console.log(data.data[i])
         }
-
         var topSearch = document.querySelector('.top')
         var artistSearch = document.querySelector('.artists')
         var songSearch = document.querySelector('.songs')
         var videoSearch = document.querySelector('.videos')
         var playlistSearch = document.querySelector('.playlists')
 
+        console.log(songSearch.dataset.songs.split(' '))
 
         if (topSearch != null) {
             topSearch.innerHTML += `
@@ -34,7 +54,7 @@ const search = {
             `
             data.data.artists.map((artist) => {
                 document.querySelector('.artists .artist').innerHTML += `
-                <div class='artist__item'>
+                <div class='artist__item' data-name='${artist.alias}'>
                     <img src='${artist.thumbnailM}'>
                     <h4>${artist.name}</h4>
                 </div>`
@@ -44,8 +64,7 @@ const search = {
             songSearch.innerHTML += '<h3>Bài Hát</h3>'
             data.data.songs.map((song, index) => {
                 songSearch.innerHTML += `
-                <div class='song'>
-                    <div class="song__index">${index+1}</div>
+                <div class='song' data-id='${song.encodeId}'>
                     <div class='song__image' style='background-image: url(${song.thumbnailM})'></div>
                     <div class='song__info'>
                         <h4>${song.title}</h4>
@@ -56,15 +75,13 @@ const search = {
                     </div>
                 </div>
                 `
-
-
             })
         }
         if (videoSearch != null) {
             videoSearch.innerHTML += `<h3>MV</h3><div class='video'></div>`
             data.data.videos.map((video) => {
                 document.querySelector('.videos .video').innerHTML += `
-                <div class="video__item">
+                <div class="video__item" data-id='${video.encodeId}'>
                     <img src="${video.thumbnailM}" alt="">
                     <div class="info">
                         <img src="${video.artist.thumbnail}" alt="">
@@ -82,17 +99,36 @@ const search = {
             <div class='playlist'></div>`
             data.data.playlists.map((playlist) => {
                 document.querySelector('.playlists .playlist').innerHTML += `
-                    <div class='playlist__item'>
-                        <img src='${playlist.thumbnailM}'>
-                        <h4>${playlist.title}</h4>
-                        <p>${playlist.artists.map((artist) => artist.name)}</p>
-                    </div>`
+                <div class='playlist__item'data-id='${playlist.encodeId}'>
+                    <img src='${playlist.thumbnailM}'>
+                    <h4>${playlist.title}</h4>
+                    <p>${playlist.artistsNames}</p>
+                </div>`
             })
         }
 
+        document.querySelectorAll('.playlist__item').forEach(playlistElement => {
+            playlistElement.onclick = () => {
+                window.history.pushState({}, '', '/playlist?p=' + playlistElement.dataset.id)
+                pathName()
+            }
+        })
+        document.querySelectorAll('.artist__item').forEach(artistElement => {
+            artistElement.onclick = () => {
+                window.history.pushState({}, '', '/artist?a=' + artistElement.dataset.name)
+                pathName()
+            }
+        })
+        document.querySelectorAll('.video__item').forEach(artistElement => {
+            artistElement.onclick = () => {
+                window.history.pushState({}, '', '/video?v=' + artistElement.dataset.id)
+                pathName()
+            }
+        })
     },
-    start: function() {
-        this.render();
+    start: async function() {
+        var data = await fetch(domain + '/api/search/' + keyword.value).then(res => res.json())
+        this.render(data)
     }
 }
 export default search

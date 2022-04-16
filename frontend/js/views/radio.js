@@ -2,13 +2,10 @@ import { radioContent } from '../variable/constant.js';
 const radio = {
     render: function() {
 
-        radioContent.innerHTML = '<h1>Radio</h1>'
+        radioContent.innerHTML = '<h1>Video MV</h1>'
     },
-    init: function() {
-        console.log('app init');
-    },
-    start: function() {
-        this.init();
+    start: async function(page) {
+        var data = await fetch(domain + '/api/listmv/IWZ9Z089/' + page + '/15')
         this.render();
     }
 }

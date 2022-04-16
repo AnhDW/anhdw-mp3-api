@@ -1,7 +1,8 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
-export const domain = 'https://anhdw-mp3-api.herokuapp.com' || 'http://localhost:3000'
 export const aElements = $$('.nav__item__link')
+export const playlistElements = $$('.playlist__item__link')
+export const domain = 'https://anhdw-mp3-api.herokuapp.com'
 export const iElements = $$('.fa-solid')
 export const content = $('#section__right__bottom')
 export const keyword = $('#keyword')
@@ -26,3 +27,10 @@ export const chartContent = $('.chart__content')
 export const radioContent = $('.radio__content')
 export const followContent = $('.follow__content')
 export const searchContent = $('.search__content')
+export const artistContent = $('.artist__content')
+export const playlistContent = $('.playlist__content')
+export const videoContent = $('.video__content')
+
+
+export const sectionRight = $('#section__right')
+export const sectionRightTop = $('#section__right__top')

@@ -1,12 +1,20 @@
+import Control from './dashboard/control.js'
 import HomeView from "./views/home.js"
 import MyMusicView from "./views/my_music.js"
 import ChartView from "./views/chart.js"
 import RadioView from "./views/radio.js"
 import FollowView from "./views/follow.js"
 import Search from "./views/search.js"
+import Artist from "./views/artist.js"
+import Playlist from "./views/playlist.js"
+import Video from "./views/video.js"
+
+
+
 import Error from "./views/404.js"
 
-import { aElements, iElements, keyword, contentItem, domain } from './variable/constant.js';
+
+import { domain, aElements, iElements, keyword, contentItem, playlistElements } from './variable/constant.js';
 
 function getUrlParameter(name, urlweb) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -19,7 +27,7 @@ const load = () => {
     HomeView.start()
     MyMusicView.start()
     ChartView.start()
-    RadioView.start()
+    RadioView.start(1)
     FollowView.start()
 }
 
@@ -30,16 +38,22 @@ const routes = {
     '/radio': 'Radio',
     '/follow': 'Follow',
     '/search': 'Search',
+    '/artist': 'Artist',
+    '/playlist': 'Playlist',
+    '/video': 'Video',
     '/404': 'Error'
 }
 
-const route = e => {
+export const route = e => {
     e.preventDefault()
-    window.history.pushState({}, '', e.target.href)
+    if (e.target.href !== domain + window.location.pathname) {
+        window.history.pushState({}, '', e.target.href)
+    }
     pathName()
+    console.log(domain + window.location.pathname, e.target.href)
 }
 
-const pathName = () => {
+export const pathName = () => {
     var path = window.location.pathname
     var routeTitle = routes[path] || routes['/404']
     document.title = 'MP3 | ' + routeTitle
@@ -50,7 +64,7 @@ const pathName = () => {
         document.querySelector('#content_404').classList.add('active')
     }
     aElements.forEach((a, index) => {
-        if (a.href === (('https://anhdw-mp3-api.herokuapp.com' || 'http://localhost:3000') + path)) {
+        if (a.href === (domain + path)) {
             a.classList.add('active')
             contentItem[index].classList.add('active')
             document.querySelector('#content_404').classList.remove('active')
@@ -58,15 +72,20 @@ const pathName = () => {
             a.classList.remove('active')
             contentItem[index].classList.remove('active')
             document.querySelector('.search__content').classList.remove('active')
+            document.querySelector('.playlist__content').classList.remove('active')
+            document.querySelector('.video__content').classList.remove('active')
         }
     })
 
     pathSearch()
+    pathArtist()
+    pathPlaylist()
+    pathVideo()
 }
 
 const pathSearch = () => {
     var path = window.location.pathname
-    var param = getUrlParameter('q', ('https://anhdw-mp3-api.herokuapp.com' || 'http://localhost:3000') + location.pathname + location.search)
+    var param = getUrlParameter('q', domain + location.pathname + location.search)
     if (path === '/search') {
         keyword.value = param
         Search.start()
@@ -77,10 +96,42 @@ const pathSearch = () => {
         document.querySelector('.search__content').classList.add('active')
     }
 }
-
+const pathArtist = () => {
+    var path = window.location.pathname
+    var param = getUrlParameter('a', domain + location.pathname + location.search)
+    if (path === '/artist') {
+        Artist.start(param)
+        contentItem.forEach((item) => {
+            item.classList.remove('active')
+        })
+        document.querySelector('.artist__content').classList.add('active')
+    }
+}
+const pathPlaylist = () => {
+    var path = window.location.pathname
+    var param = getUrlParameter('p', domain + location.pathname + location.search)
+    if (path === '/playlist') {
+        Playlist.start(param)
+        contentItem.forEach((item) => {
+            item.classList.remove('active')
+        })
+        document.querySelector('.playlist__content').classList.add('active')
+    }
+}
+const pathVideo = () => {
+    var path = window.location.pathname
+    var param = getUrlParameter('v', domain + location.pathname + location.search)
+    if (path === '/video') {
+        Video.start(param)
+        contentItem.forEach((item) => {
+            item.classList.remove('active')
+        })
+        document.querySelector('.video__content').classList.add('active')
+    }
+}
 const handleSearch = () => {
 
-    document.querySelector('.fa-magnifying-glass').onclick = (e) => {
+    document.querySelector('#search__button').children[0].onclick = (e) => {
         document.querySelector('#search__button').click()
     }
     document.querySelector('#search__button').onclick = (e) => {
@@ -99,17 +150,27 @@ const handleSearch = () => {
     })
 }
 
+aElements.forEach((aElement) => {
 
-
-aElements.forEach((aElement, index) => {
-    iElements[index].onclick = (e) => {
+    aElement.children[0].onclick = (e) => {
         aElement.click()
     }
     aElement.onclick = route
 })
 
+// playlistElements.forEach((playlistElement) => {
+//     playlistElement.children.forEach((playlistChild) => {
+//         playlistChild.onclick = (e) => {
+//             playlistElement.click()
+//         }
+//     })
+//     playlistElement.onclick = route
+// })
+
+
 window.onpopstate = pathName
 
 load()
+Control.start()
 pathName()
 handleSearch()

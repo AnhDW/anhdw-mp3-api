@@ -62,8 +62,36 @@ apiRouters.get('/song/:id', (req, res) => {
         })
 })
 
+apiRouters.get('/infosong/:id', (req, res) => {
+    ZingMp3.getInfoSong(req.params.id)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(err => {
+            res.json({ err: err })
+        })
+})
+
 apiRouters.get('/video/:id', (req, res) => {
     ZingMp3.getVideo(req.params.id)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(err => {
+            res.json({ err: err })
+        })
+})
+apiRouters.get('/category/:id', (req, res) => {
+    ZingMp3.getCategoryMV(req.params.id)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(err => {
+            res.json({ err: err })
+        })
+})
+apiRouters.get('/listmv/:id/:page/:count', (req, res) => {
+    ZingMp3.getListMV(req.params.id, req.params.page, req.params.count)
         .then(data => {
             res.json(data)
         })
