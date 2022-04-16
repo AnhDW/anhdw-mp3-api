@@ -57,6 +57,13 @@ const control = {
     },
     playSong: function() {
         music.play()
+        if (music.play() !== undefined) {
+            music.play().then(function() {
+                console.log('play')
+            }).catch(function(error) {
+                console.log(error)
+            })
+        }
         container.classList.add('playing')
     },
     pauseSong: function() {
