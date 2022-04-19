@@ -1,7 +1,7 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const GOOGLE_CLIENT_ID = '532464152340-sq4pqa3gkra4ns9l0bl12gn3orgqppob.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 //const GOOGLE_URL = 'http://localhost:3000/auth/google/callback';
 const GOOGLE_URL = 'https://anhdw-mp3-api.herokuapp.com/auth/google/callback';
 
