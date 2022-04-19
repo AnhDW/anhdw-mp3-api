@@ -5,9 +5,9 @@ export const btnBack = $('.icon-left')
 export const btnNext = $('.icon-right')
 export const btnUser = $('.btn__user')
 export const aElements = $$('.nav__item__link')
-export const domain = 'http://localhost:3000'
+    //export const domain = 'http://localhost:3000'
 
-//export const domain = 'https://anhdw-mp3-api.herokuapp.com'
+export const domain = 'https://anhdw-mp3-api.herokuapp.com'
 
 export const iElements = $$('.fa-solid')
 export const content = $('#section__right__bottom')
