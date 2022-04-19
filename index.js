@@ -8,7 +8,6 @@ const port = process.env.PORT || 3000
 
 app.use(express.static(path.join(__dirname, './frontend')))
 
-app.use('/api', apiRouters)
 app.use('/auth', authRouters)
 
 app.get('/*', (req, res) => {
