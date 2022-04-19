@@ -4,9 +4,9 @@ import { route, pathName } from '../index.js';
 const playlist = {
 
         render: function(data) {
+                console.log(data)
                 var dataSong = data.data.song.items
                 var dataArtist = data.data.artists
-                console.log(dataArtist)
                 playlistContent.innerHTML =
                     `<div class="playlist__page">                        
                         <div class="playlist__info">

@@ -1,18 +1,21 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
+export const btnLogin = $('.btn__login')
+export const btnBack = $('.icon-left')
+export const btnNext = $('.icon-right')
+export const btnUser = $('.btn__user')
 export const aElements = $$('.nav__item__link')
-export const playlistElements = $$('.playlist__item__link')
+export const domain = 'http://localhost:3000'
 
-export const domain = 'https://anhdw-mp3-api.herokuapp.com'
-    //export const domain = 'http://localhost:3001'
+//export const domain = 'https://anhdw-mp3-api.herokuapp.com'
 
 export const iElements = $$('.fa-solid')
 export const content = $('#section__right__bottom')
 export const keyword = $('#keyword')
-export const songImg = $('.song__img')
+export const songImg = $('.song__img__item')
 export const songTitle = $('.title')
 export const songAuthor = $('.author')
-export const music = $('#audio')
+export const audio = $('#audio')
 export const playBtn = $('.icon-play')
 export const pauseBtn = $('.icon-pause')
 export const togglePlay = $('.btn-toggle-play')
@@ -21,6 +24,7 @@ export const nextBtn = $('.btn-next')
 export const randomBtn = $('.btn-random')
 export const repeatBtn = $('.btn-repeat')
 export const progress = $('.progress')
+export const btnDownload = $('.download')
 export const container = $('.container')
 export const contentItem = $$('.content__item')
 

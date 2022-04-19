@@ -14,7 +14,7 @@ import Video from "./views/video.js"
 import Error from "./views/404.js"
 
 
-import { domain, aElements, iElements, keyword, contentItem, playlistElements } from './variable/constant.js';
+import { domain, aElements, iElements, keyword, contentItem, btnBack, btnNext } from './variable/constant.js';
 
 function getUrlParameter(name, urlweb) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -158,15 +158,12 @@ aElements.forEach((aElement) => {
     aElement.onclick = route
 })
 
-// playlistElements.forEach((playlistElement) => {
-//     playlistElement.children.forEach((playlistChild) => {
-//         playlistChild.onclick = (e) => {
-//             playlistElement.click()
-//         }
-//     })
-//     playlistElement.onclick = route
-// })
-
+btnBack.onclick = () => {
+    window.history.back()
+}
+btnNext.onclick = () => {
+    window.history.forward()
+}
 
 window.onpopstate = pathName
 

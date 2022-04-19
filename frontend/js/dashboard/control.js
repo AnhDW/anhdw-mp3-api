@@ -4,7 +4,7 @@ import {
     songImg,
     songTitle,
     songAuthor,
-    music,
+    audio,
     playBtn,
     pauseBtn,
     togglePlay,
@@ -15,9 +15,11 @@ import {
     progress,
     sectionRight,
     sectionRightTop,
+    btnDownload,
 } from '../variable/constant.js'
 
 const control = {
+    currentUrl: '',
     currentId: '',
     currentIndex: 0,
     data: [],
@@ -56,16 +58,32 @@ const control = {
         return min + ':' + sec
     },
     playSong: function() {
-        music.play()
+        audio.play()
         container.classList.add('playing')
     },
     pauseSong: function() {
-        music.pause()
+        audio.pause()
         container.classList.remove('playing')
     },
-    handle: function() {
+    download: function(url) {
+        var filename = url.substring(url.lastIndexOf("/") + 1).split("?")[0]
+        var xhr = new XMLHttpRequest()
+        xhr.responseType = 'blob'
+        xhr.onload = function() {
+            var a = document.createElement('a')
+            a.href = window.URL.createObjectURL(xhr.response)
+            a.download = filename
+            a.style.display = 'none'
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+        }
+        xhr.open('GET', url)
+        xhr.send()
+    },
+    handle: async function() {
         togglePlay.onclick = () => {
-            if (music.paused) {
+            if (audio.paused) {
                 this.playSong()
             } else {
                 this.pauseSong()
@@ -100,27 +118,31 @@ const control = {
                 repeatBtn.classList.add('active')
             }
         }
-        music.ontimeupdate = () => {
-            if (music.duration) {
-                const progressPercent = Math.floor(music.currentTime / music.duration * 100) //thời gian hiện tại chia cho thời lượng bài hát ra phần trăm
+        audio.ontimeupdate = () => {
+            if (audio.duration) {
+                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100) //thời gian hiện tại chia cho thời lượng bài hát ra phần trăm
                 progress.value = progressPercent
-                document.querySelector('.current-time').innerText = this.time(music.currentTime)
-                document.querySelector('.duration-time').innerText = this.time(music.duration)
+                document.querySelector('.current-time').innerText = this.time(audio.currentTime)
+                document.querySelector('.duration-time').innerText = this.time(audio.duration)
             }
         }
         progress.onchange = function(e) {
-            music.currentTime = e.target.value / 100 * music.duration
+            audio.currentTime = e.target.value / 100 * audio.duration
         }
-        music.onended = function() {
+        audio.onended = function() {
             if (repeatBtn.classList.contains('active') == false) {
                 nextBtn.click()
             } else {
-                music.play()
+                audio.play()
             }
         }
         sectionRight.onscroll = function() {
             const scrollTop = sectionRight.scrollTop
             sectionRightTop.style.backgroundColor = `rgba(251,211,210,${scrollTop / 100})`
+        }
+        btnDownload.onclick = () => {
+            console.log(this.currentUrl)
+            this.download(this.currentUrl)
         }
     },
     getData: async function() {
@@ -136,14 +158,14 @@ const control = {
 
         }
     },
-    render: function() {},
     init: async function() {
         var infoSong = await fetch(domain + '/api/infosong/' + this.data[this.currentIndex]).then(res => res.json())
-        var musicSong = await fetch(domain + '/api/song/' + this.data[this.currentIndex]).then(res => res.json())
-        songImg.style.backgroundImage = `url(${infoSong.data.thumbnail})`
+        var audioSong = await fetch(domain + '/api/song/' + this.data[this.currentIndex]).then(res => res.json())
+        songImg.src = infoSong.data.thumbnail
         songTitle.innerText = infoSong.data.title
         songAuthor.innerText = infoSong.data.artistsNames
-        music.src = musicSong.data['128']
+        audio.src = audioSong.data['128']
+        this.currentUrl = audioSong.data['128']
         this.playSong()
 
         var song = document.querySelectorAll('.song')

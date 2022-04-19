@@ -1,9 +1,25 @@
 import {
     domain,
+    aElements,
+    iElements,
+    content,
     keyword,
+    songImg,
+    songTitle,
+    songAuthor,
+    audio,
+    playBtn,
+    pauseBtn,
+    togglePlay,
+    prevBtn,
+    nextBtn,
+    randomBtn,
+    repeatBtn,
+    progress,
+    container,
     searchContent,
 } from '../variable/constant.js';
-import { route, pathName } from '../index.js';
+import { pathName } from '../index.js';
 
 const search = {
     currentIndex: 0,
@@ -21,7 +37,7 @@ const search = {
         var videoSearch = document.querySelector('.videos')
         var playlistSearch = document.querySelector('.playlists')
 
-        console.log(songSearch.dataset.songs.split(' '))
+
 
         if (topSearch != null) {
             topSearch.innerHTML += `

@@ -95,7 +95,12 @@ const artist = {
                 pathName()
             }
         })
-
+        document.querySelectorAll('.video__item').forEach(artistElement => {
+            artistElement.onclick = () => {
+                window.history.pushState({}, '', '/video?v=' + artistElement.dataset.id)
+                pathName()
+            }
+        })
     },
     start: async function(params) {
         var data = await fetch(`${domain}/api/artist/${params}`).then(res => res.json())

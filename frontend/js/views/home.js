@@ -1,4 +1,4 @@
-import { homeContent, playlistElements, container, domain } from '../variable/constant.js';
+import { homeContent, container, domain } from '../variable/constant.js';
 import { route, pathName } from '../index.js';
 
 const home = {

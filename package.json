@@ -4,7 +4,6 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index.js"
     },
     "keywords": [],
@@ -12,6 +11,9 @@
     "license": "ISC",
     "dependencies": {
         "express": "^4.17.3",
+        "express-session": "^1.17.2",
+        "passport": "^0.5.2",
+        "passport-google-oauth2": "^0.2.0",
         "zingmp3-api-full": "^1.0.9"
     }
 }

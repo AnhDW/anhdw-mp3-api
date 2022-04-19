@@ -57,8 +57,8 @@
 
                 <div id="section__right__top">
                     <div id="directional">
-                        <div class="directional__item"></div>
-                        <div class="directional__item"></div>
+                        <div class="directional__item icon-left"><i class="fa-solid fa-arrow-left"></i></div>
+                        <div class="directional__item icon-right"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
                     <div id="search">
                         <input type="text" id="keyword" placeholder="Nhập tên bài hát hoặc tên ca sĩ" autocomplete="off" />
@@ -67,10 +67,16 @@
                         </a>
                     </div>
                     <div id="setting">
-                        <div class="setting__item"></div>
-                        <div class="setting__item"></div>
-                        <div class="setting__item"></div>
-                        <div class="setting__item"></div>
+                        <div class="setting__item btn__login">
+                            <i class="fa-brands fa-google icon-login"></i>
+                            <i class="fa-solid fa-sign-out-alt icon-logout"></i>
+                            <!-- <a href="" class="btn__login">
+                            </a> -->
+                        </div>
+                        <div class="setting__item">
+                            <img class="btn__user" src="./img/Users-User-Male-icon.png">
+                        </div>
+
                     </div>
 
                 </div>
@@ -111,12 +117,14 @@
                 </div>
             </div>
         </div>
-        <div id="dashboard">
-            <div class="song">
-                <div class="song__img" style="background-image: url('https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_jpeg/cover/1/8/0/7/1807c6b5fcc7058a14e1a288801221c7.jpg');"></div>
+        <div id="dashboard" class="dashboard">
+            <div class="get__song">
+                <div class="song__img">
+                    <img class="song__img__item" src="https://photo-resize-zmp3.zadn.vn/w480_r1x1_webp/cover/c/4/a/4/c4a49014b42161249400b76a35cf5b99.jpg" alt="">
+                </div>
                 <div class="song__body">
-                    <h4 class="title">Sau Lưng Anh Có Ai Kia</h4>
-                    <p class="author">Thiều Bảo Trâm</p>
+                    <h4 class="title">Thay Mọi Cô Gái Yêu Anh</h4>
+                    <p class="author">AMEE</p>
                 </div>
                 <div class="option">
                     <i class="fas fa-ellipsis-h"></i>
@@ -149,10 +157,17 @@
                 </div>
             </div>
             <div class="line"></div>
-            <div class="like"></div>
+            <div class="like">
+                <div class="like__item favorite">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="like__item download">
+                    <i class="fas fa-download"></i>
+                </div>
+            </div>
 
         </div>
-        <audio id="audio" src="https://mp3-s1-zmp3.zmdcdn.me/6967661c225dcb03924c/4853633856808819522?authen=exp=1650275258~acl=/6967661c225dcb03924c/*~hmac=12b366e0baecf987e220f8eabae54178&fs=MTY1MDEwMjQ1ODUwM3x3ZWJWNnwxMDY0NzQ4MDA5fDExMy4xODIdUngMTQwLjM2"></audio>
+        <audio id="audio" src=""></audio>
     </div>
 
     <script type="module" src="js/index.js"></script>
