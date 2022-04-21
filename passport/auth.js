@@ -4,7 +4,7 @@ const GOOGLE_CLIENT_ID = '532464152340-sq4pqa3gkra4ns9l0bl12gn3orgqppob.apps.goo
 const GOOGLE_CLIENT_SECRET = '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';
 //const GOOGLE_URL = 'http://localhost:3000/auth/google/callback';
 //const GOOGLE_URL = 'https://anhdw-mp3-api.herokuapp.com/auth/google/callback';
-const GOOGLE_URL = 'https://anhdwmp3api.herokuapp.com/auth/google/callback';
+const GOOGLE_URL = 'https://anhdw-mp3-api.vercel.app/auth/google/callback';
 
 passport.use(new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,

@@ -8,7 +8,7 @@ export const aElements = $$('.nav__item__link')
 
 //export const domain = 'http://localhost:3000'
 //export const domain = 'https://anhdw-mp3-api.herokuapp.com'
-export const domain = 'https://anhdw-mp3-api.vercel.app/'
+export const domain = 'https://anhdw-mp3-api.vercel.app'
 
 export const iElements = $$('.fa-solid')
 export const content = $('#section__right__bottom')
