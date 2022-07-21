@@ -39,7 +39,7 @@ const artist = {
                                 <p>${song.artistsNames}</p>
                             </div>
                             <div class='song__control'>
-                            <i class="fas fa-ellipsis-h"></i>
+                            <i class="fas fa-heart"></i>
                             </div>
                         </div>`
                     }).join('')

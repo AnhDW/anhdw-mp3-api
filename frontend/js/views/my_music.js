@@ -2,24 +2,38 @@ import { myMusicContent, domain, container, btnLogin, btnUser } from '../variabl
 import { pathName } from '../index.js';
 
 const myMusic = {
-    data: {},
-    handle: function() {
-        console.log(this.data.user)
-        if (this.data.isLogin) {
-            container.classList.add('login')
-        } else {
-            container.classList.remove('login')
-        }
+        removeId: '',
+        favoriteSong: [],
+        data: {},
+        handle: function() {
+            console.log(this.data)
 
-        btnUser.onclick = () => {
-            window.history.pushState({}, '', '/my-music')
-            pathName()
-        }
-    },
-    render: function() {
-        if (this.data.isLogin) {
-            myMusicContent.innerHTML =
-                `<div class="user">
+            if (this.data.isLogin) {
+                container.classList.add('login')
+                fetch('/favorite', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: this.data.user.id
+                    })
+                })
+
+            } else {
+                container.classList.remove('login')
+            }
+
+            btnUser.onclick = () => {
+                window.history.pushState({}, '', '/my-music')
+                pathName()
+            }
+        },
+        render: async function() {
+                if (this.data.isLogin) {
+                    myMusicContent.innerHTML =
+                        `<div class="user">
                     <div class="user__avatar">
                         <img src="${this.data.user.picture}" alt=""/>
                     </div>
@@ -29,9 +43,53 @@ const myMusic = {
                         <p>Id:${this.data.user.id}</p>
                     </div>
                 </div>
-                <div class="favorite__song">
+                <div id="favorite__song" class="favorite__song" data-songs='${this.favoriteSong.map(item=>item).join(' ')}'>
                     <h3>Favorite Song</h3>
+                    ${this.favoriteSong.map( item => {
+                        fetch('/api/infosong/' + item)
+                        .then(res => res.json()) 
+                        .then(data => {
+                            document.querySelector('.favorite__song').innerHTML +=
+                             `<div class='song' data-id='${data.data.encodeId}'>
+                             <div class='song__image' style='background-image: url(${data.data.thumbnail})'></div>
+                             <div class='song__info'>
+                                 <h4>${data.data.title}</h4>
+                                 <p>${data.data.artists.map(artist => artist.name)}</p>
+                             </div>
+                             <div class='song__control'>
+                             <i class="fa-solid fa-xmark"></i>
+                             </div>
+                         </div>`
+                        })
+                    }).join(' ')}
                 </div>`
+
+                document.querySelector('.favorite__song').onclick = (e) => {
+                    var btnDelete = e.target.classList.contains('fa-xmark')
+                    if (btnDelete) {
+                        var newFavoriteSong = this.favoriteSong.filter(item => item !== e.target.parentNode.parentNode.dataset.id)
+                        this.favoriteSong = newFavoriteSong
+                        this.removeId = e.target.parentNode.parentNode.dataset.id
+                        
+                        e.target.parentNode.parentNode.remove()
+                    }
+                    console.log(this.removeId)
+                    document.querySelectorAll('.fa-heart').forEach(item => {
+                        var favoriteSong = item.parentNode.parentNode
+                        if (favoriteSong.dataset.id === this.removeId) {
+                            item.classList.remove('active')
+                        }
+                    })
+                }
+
+                document.querySelectorAll('.fa-heart').forEach(item => {
+                    var favoriteSong = item.parentNode.parentNode
+                    this.favoriteSong.forEach(idFavorite => {
+                        if (favoriteSong.dataset.id === idFavorite) {
+                            item.classList.add('active')
+                        }
+                    })
+                })
             btnUser.src = this.data.user.picture
         } else {
             myMusicContent.innerHTML =
@@ -47,12 +105,10 @@ const myMusic = {
                 </div>
                 <div class="favorite__song">
                     <h3>Favorite Song</h3>
-                    <div class="songs">
-                    </div>
+                    <p>Bạn chưa đăng nhập</p>
                 </div>`
             btnUser.src = './img/Users-User-Male-icon.png'
         }
-        //btnLogin.href = this.data.link
         btnLogin.onclick = () => {
             window.history.pushState({}, '', this.data.link)
             window.location.reload()
@@ -60,8 +116,12 @@ const myMusic = {
 
     },
     start: async function() {
-        var data = await fetch(domain + '/auth/profile').then(res => res.json())
+        var data = await fetch('/auth/profile').then(res => res.json())
         this.data = data
+        if (data.isLogin) {
+            const favorite = await fetch(`/favorite/${data.user.id}`, { method: 'GET', }).then(res => res.json())
+            this.favoriteSong = favorite.songList
+        }
         this.render()
         this.handle()
     }

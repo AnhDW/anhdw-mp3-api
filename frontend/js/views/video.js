@@ -1,4 +1,4 @@
-import { videoContent, domain } from '../variable/constant.js'
+import { videoContent, domain, audio } from '../variable/constant.js'
 import { pathName } from '../index.js';
 
 const video = {
@@ -8,7 +8,7 @@ const video = {
                 videoContent.innerHTML = `
         <div class='video__page'>
             <div class='main__video'>
-                <video controls>
+                <video id='video' controls>
                     <source src="${this.data.streaming.mp4['720p']}" type="video/mp4">
                 </video>
                 <div class='main__video__info'>
@@ -48,11 +48,14 @@ const video = {
                 pathName()
             }
         })
+        
     },
     start: async function(params) {
-        var data = await fetch(`${domain}/api/video/${params}`).then(res => res.json())
+        var data = await fetch(`/api/video/${params}`).then(res => res.json())
         this.data = data.data
         this.render()
+        audio.pause()
+        document.getElementById('video').play()
     }
 }
 

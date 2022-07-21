@@ -17,8 +17,9 @@ import {
     sectionRightTop,
     btnDownload,
 } from '../variable/constant.js'
-
+import MyMusic from '../views/my_music.js'
 const control = {
+    favoriteSong: [],
     currentUrl: '',
     currentId: '',
     currentIndex: 0,
@@ -144,30 +145,66 @@ const control = {
             console.log(this.currentUrl)
             this.download(this.currentUrl)
         }
+
     },
-    getData: async function() {
+    getData: function() {
         container.onclick = e => {
-            var songs = e.target.closest('.songs') || e.target.closest('.listSong')
-            var song = e.target.closest('.song')
-            if (songs && song) {
+            var songs = e.target.closest('.songs') || e.target.closest('.listSong') || e.target.closest('.favorite__song')
+            var song = e.target.closest('.song:not(.active)')
+            var heart = e.target.closest('.fa-heart')
+            var favorites = []
+            if (heart) {
+                if (MyMusic.data.isLogin) {
+                    heart.classList.toggle('active')
+                    MyMusic.start()
+                } else {
+                    location.href = '/auth/google'
+                }
+            } else if (songs && song) {
                 this.data = songs.dataset.songs.split(' ')
                 this.currentIndex = this.data.findIndex(item => item === song.dataset.id)
                 this.currentId = song.dataset.id
                 this.init()
             }
+            // đưa bài hát vào mảng
+            document.querySelectorAll('.fa-heart').forEach(async(item) => {
+                var heartActive = item.classList.contains('active')
+                var favoriteSong = item.parentNode.parentNode
+                if (heartActive) {
+                    favorites.push(favoriteSong.dataset.id)
+                    this.favoriteSong = favorites
+                }
+            })
 
+            console.log(this.favoriteSong)
+
+            //lưu mảng vào data
+            if (MyMusic.data.isLogin) {
+                fetch(`/favorite/${MyMusic.data.user.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        songList: this.favoriteSong
+                    })
+                })
+            }
         }
     },
     init: async function() {
-        var infoSong = await fetch(domain + '/api/infosong/' + this.data[this.currentIndex]).then(res => res.json())
-        var audioSong = await fetch(domain + '/api/song/' + this.data[this.currentIndex]).then(res => res.json())
+        var infoSong = await fetch('/api/infosong/' + this.data[this.currentIndex]).then(res => res.json())
+        var audioSong = await fetch('/api/song/' + this.data[this.currentIndex]).then(res => res.json())
         songImg.src = infoSong.data.thumbnail
         songTitle.innerText = infoSong.data.title
         songAuthor.innerText = infoSong.data.artistsNames
         audio.src = audioSong.data['128']
         this.currentUrl = audioSong.data['128']
         this.playSong()
-
+        this.songActive()
+    },
+    songActive: function() {
         var song = document.querySelectorAll('.song')
         song.forEach(item => {
             if (item.dataset.id === this.currentId) {

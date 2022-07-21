@@ -1,4 +1,4 @@
-import { radioContent, domain } from '../variable/constant.js';
+import { radioContent, sectionRight } from '../variable/constant.js';
 import { pathName } from '../index.js';
 
 const radio = {
@@ -28,9 +28,14 @@ const radio = {
                         pathName()
                     }
                 })
+                sectionRight.addEventListener('scroll', () => {
+                    if(sectionRight.scrollTop>=sectionRight.scrollHeight*85/100) {
+                        this.start(2)
+                    }
+                })
     },
     start: async function(page) {
-        var data = await fetch(domain + '/api/listmv/IWZ9Z089/' + page + '/15').then(res => res.json())
+        var data = await fetch( '/api/listmv/IWZ9Z089/' + page + '/15').then(res => res.json())
         this.data = data.data.items
         this.render()
     }

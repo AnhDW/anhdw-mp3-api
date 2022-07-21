@@ -18,9 +18,10 @@ import {
     progress,
     container,
     searchContent,
-} from '../variable/constant.js';
-import { pathName } from '../index.js';
-
+} from '../variable/constant.js'
+import { pathName } from '../index.js'
+import MyMusic from './my_music.js'
+import Control from '../dashboard/control.js'
 const search = {
     currentIndex: 0,
     render: async function(data) {
@@ -44,7 +45,7 @@ const search = {
             <h3>Top Kết Quả "${keyword.value}"</h3>
             <div class='top__item'>
                 <img src='${data.data.top.thumbnailM}'>
-                <h4>${data.data.top.name||data.data.top.artists.map(artist=>artist.name)}</h4>
+                <h4>${data.data.top.name||data.data.top.artistsNames}</h4>
             </div>`
         }
 
@@ -71,7 +72,7 @@ const search = {
                         <p>${song.artistsNames}</p>
                     </div>
                     <div class='song__control'>
-                    <i class="fas fa-ellipsis-h"></i>
+                    <i class="fas fa-heart"></i>
                     </div>
                 </div>
                 `
@@ -128,6 +129,8 @@ const search = {
     },
     start: async function() {
         var data = await fetch(domain + '/api/search/' + keyword.value).then(res => res.json())
+            // MyMusic.start()
+            // Control.songActive()
         this.render(data)
     }
 }

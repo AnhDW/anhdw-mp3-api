@@ -4,6 +4,7 @@ import MyMusicView from "./views/my_music.js"
 import ChartView from "./views/chart.js"
 import RadioView from "./views/radio.js"
 import FollowView from "./views/follow.js"
+import Separation from "./views/separation.js"
 import Search from "./views/search.js"
 import Artist from "./views/artist.js"
 import Playlist from "./views/playlist.js"
@@ -14,7 +15,7 @@ import Video from "./views/video.js"
 import Error from "./views/404.js"
 
 
-import { domain, aElements, iElements, keyword, contentItem, btnBack, btnNext } from './variable/constant.js';
+import { domain, aElements, iElements, keyword, contentItem, btnBack, btnNext, container } from './variable/constant.js';
 
 function getUrlParameter(name, urlweb) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -29,6 +30,7 @@ const load = () => {
     ChartView.start()
     RadioView.start(1)
     FollowView.start()
+    Separation.start()
 }
 
 const routes = {
@@ -41,6 +43,7 @@ const routes = {
     '/artist': 'Artist',
     '/playlist': 'Playlist',
     '/video': 'Video',
+    '/separation': 'Separation',
     '/404': 'Error'
 }
 
@@ -50,7 +53,8 @@ export const route = e => {
         window.history.pushState({}, '', e.target.href)
     }
     pathName()
-    console.log(domain + window.location.pathname, e.target.href)
+    container.scrollTo({ top: 0, behavior: 'smooth' })
+        //console.log(domain + window.location.pathname, e.target.href)
 }
 
 export const pathName = () => {
@@ -74,6 +78,7 @@ export const pathName = () => {
             document.querySelector('.search__content').classList.remove('active')
             document.querySelector('.playlist__content').classList.remove('active')
             document.querySelector('.video__content').classList.remove('active')
+            document.querySelector('.artist__content').classList.remove('active')
         }
     })
 
